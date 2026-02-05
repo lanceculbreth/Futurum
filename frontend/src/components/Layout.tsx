@@ -17,6 +17,7 @@ export default function Layout() {
   const { conversations, loadConversations } = useChatStore()
   const { isDark, toggle: toggleTheme } = useThemeStore()
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const [showAllPracticeAreas, setShowAllPracticeAreas] = useState(false)
   
   useEffect(() => {
     loadConversations()
@@ -38,6 +39,16 @@ export default function Layout() {
     { path: '/chat', label: 'AI Devices', icon: Cpu },
     { path: '/practice/ai-platforms', label: 'AI Platforms', icon: Layers },
     { path: '/practice/cybersecurity', label: 'Cybersecurity', icon: Shield },
+  ]
+  
+  const additionalPracticeAreas = [
+    { path: '/practice/data-intelligence', label: 'Data Intelligence', icon: Cpu },
+    { path: '/practice/ceo-insights', label: 'CEO Insights', icon: Cpu },
+    { path: '/practice/channel-ecosystems', label: 'Channel Ecosystems', icon: Cpu },
+    { path: '/practice/cio-insights', label: 'CIO Insights', icon: Cpu },
+    { path: '/practice/enterprise-software', label: 'Enterprise Software', icon: Cpu },
+    { path: '/practice/semiconductors', label: 'Semiconductors', icon: Cpu },
+    { path: '/practice/software-engineering', label: 'Software Engineering', icon: Cpu },
   ]
   
   
@@ -95,6 +106,31 @@ export default function Layout() {
               <span>{item.label}</span>
             </Link>
           ))}
+          
+          {/* Additional Practice Areas (expanded) */}
+          {showAllPracticeAreas && additionalPracticeAreas.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={clsx(
+                "flex items-center space-x-3 px-3 py-2 text-sm rounded-lg transition-colors",
+                isActive(item.path) 
+                  ? "bg-futurum-sidebarActive dark:bg-dark-primaryLight text-[#313436] dark:text-dark-text font-bold" 
+                  : "text-futurum-textMuted dark:text-dark-textMuted hover:bg-futurum-sidebarHover dark:hover:bg-dark-bgAlt hover:text-futurum-text dark:hover:text-dark-text"
+              )}
+            >
+              <item.icon size={18} />
+              <span>{item.label}</span>
+            </Link>
+          ))}
+          
+          {/* See all / Show less toggle */}
+          <button
+            onClick={() => setShowAllPracticeAreas(!showAllPracticeAreas)}
+            className="px-3 py-1.5 text-xs text-[#357CA3] hover:text-[#2d6a8a] font-medium transition-colors"
+          >
+            {showAllPracticeAreas ? 'Show less' : 'See all 11'}
+          </button>
           
           {/* Divider */}
           <div className="my-6 border-t border-futurum-border dark:border-dark-border" />
