@@ -319,7 +319,7 @@ function MegaMenuDropdown({
   onItemClick: (item: string, subItem?: string) => void
 }) {
   return (
-    <div className="relative">
+    <>
       <button
         onClick={onToggle}
         className={clsx(
@@ -365,7 +365,7 @@ function MegaMenuDropdown({
           </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
@@ -442,7 +442,7 @@ export default function ChatPage() {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Sticky Navigation Header - Always visible */}
         <div className="sticky top-0 z-40 pt-5 pb-4 px-4">
-          <div className="max-w-4xl mx-auto flex items-center space-x-3">
+          <div className="max-w-4xl mx-auto flex items-center space-x-3 relative">
             {/* Back Button */}
             <button 
               onClick={() => navigate('/home')}
@@ -452,7 +452,7 @@ export default function ChatPage() {
             </button>
             
             {/* Pill Menu */}
-            <div className="flex-1 bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-full px-2 py-2 shadow-sm relative">
+            <div className="flex-1 bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-full px-2 py-2 shadow-sm">
               {/* Navigation - Option A (Simple Dropdowns) */}
               {navStyle === 'A' && (
                 <div className="flex items-center justify-center space-x-1">
