@@ -317,17 +317,14 @@ function MegaMenuDropdown({
       </button>
       
       {isOpen && (
-        <div className="fixed left-1/2 -translate-x-1/2 top-[72px] w-full max-w-4xl mx-auto bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-xl shadow-lg z-50 overflow-hidden">
+        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[calc(100vw-theme(spacing.60)-theme(spacing.32))] max-w-3xl bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-xl shadow-lg z-50 overflow-hidden">
           <div className="p-5">
             <div className="flex flex-wrap gap-x-8 gap-y-4">
               {sections.map((section, idx) => (
                 <div key={idx} className={section.subItems.length > 0 ? "space-y-2" : ""}>
                   <button
                     onClick={() => onItemClick(section.name)}
-                    className={clsx(
-                      "text-left text-sm font-semibold text-futurum-text dark:text-dark-text hover:text-[#357CA3] transition-colors",
-                      section.subItems.length > 0 ? "px-0 py-1" : "px-0 py-1"
-                    )}
+                    className="text-left text-sm font-semibold text-futurum-text dark:text-dark-text hover:text-[#357CA3] transition-colors py-1"
                   >
                     {section.name}
                   </button>
