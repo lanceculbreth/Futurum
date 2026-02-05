@@ -1,7 +1,8 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { 
   LogOut, ChevronDown, Radio, Moon, Sun,
-  Lightbulb, FileBarChart, Download, Cpu, Layers, Shield, Home, User
+  Lightbulb, FileBarChart, Download, Cpu, Layers, Shield, Home, User,
+  Users, BookOpen
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import futurumLogo from '../assets/futurum-logo.png'
@@ -33,6 +34,8 @@ export default function Layout() {
     { path: '/reports', label: 'Reports', icon: FileBarChart },
     { path: '/signal', label: 'Signal', icon: Radio },
     { path: '/export', label: 'Export Data', icon: Download },
+    { path: '/analyst-directory', label: 'Analyst Directory', icon: Users },
+    { path: '/research-agenda', label: 'Research Agenda', icon: BookOpen },
   ]
   
   const practiceAreaItems = [
