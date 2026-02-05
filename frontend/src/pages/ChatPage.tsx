@@ -317,24 +317,27 @@ function MegaMenuDropdown({
       </button>
       
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 min-w-[480px] bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-xl shadow-lg z-50 overflow-hidden">
-          <div className="p-4">
-            <div className="grid grid-cols-2 gap-4">
+        <div className="fixed left-1/2 -translate-x-1/2 top-[72px] w-full max-w-4xl mx-auto bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-xl shadow-lg z-50 overflow-hidden">
+          <div className="p-5">
+            <div className="flex flex-wrap gap-x-8 gap-y-4">
               {sections.map((section, idx) => (
-                <div key={idx} className="space-y-1">
+                <div key={idx} className={section.subItems.length > 0 ? "space-y-2" : ""}>
                   <button
                     onClick={() => onItemClick(section.name)}
-                    className="w-full text-left px-3 py-2 text-sm font-semibold text-futurum-text dark:text-dark-text hover:bg-[#357CA3]/10 hover:text-[#357CA3] rounded-lg transition-colors"
+                    className={clsx(
+                      "text-left text-sm font-semibold text-futurum-text dark:text-dark-text hover:text-[#357CA3] transition-colors",
+                      section.subItems.length > 0 ? "px-0 py-1" : "px-0 py-1"
+                    )}
                   >
                     {section.name}
                   </button>
                   {section.subItems.length > 0 && (
-                    <div className="ml-3 space-y-0.5">
+                    <div className="space-y-1">
                       {section.subItems.map((subItem, subIdx) => (
                         <button
                           key={subIdx}
                           onClick={() => onItemClick(section.name, subItem)}
-                          className="w-full text-left px-3 py-1.5 text-xs text-futurum-textMuted dark:text-dark-textMuted hover:bg-futurum-bg dark:hover:bg-dark-bgAlt hover:text-futurum-text dark:hover:text-dark-text rounded-md transition-colors"
+                          className="block text-left text-xs text-futurum-textMuted dark:text-dark-textMuted hover:text-[#357CA3] transition-colors py-0.5"
                         >
                           {subItem}
                         </button>
