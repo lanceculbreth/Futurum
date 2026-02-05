@@ -173,7 +173,7 @@ function SourceCard({
   )
 }
 
-// AI Devices Navigation Data
+// AI Devices Navigation Data (Option A - Simple Dropdowns)
 const aiDevicesNav = {
   marketData: {
     label: 'Market Data',
@@ -192,7 +192,48 @@ const aiDevicesNav = {
   }
 }
 
-// Navigation Dropdown Component
+// AI Devices Mega Menu Data (Option B - Mega Menu with Sub-pages)
+const megaMenuNav = {
+  marketData: {
+    label: 'Market Data',
+    icon: BarChart3,
+    sections: [
+      { name: 'Executive Summary', subItems: [] },
+      { 
+        name: 'Market Forecast', 
+        subItems: ['Scenario', 'Product', 'End User', 'Pricing', 'TOPS', 'Vertical', 'Regional'] 
+      },
+      { 
+        name: 'Market Share', 
+        subItems: ['Prediction', 'Actuals'] 
+      },
+      { name: 'Methodology', subItems: [] },
+    ]
+  },
+  decisionMaker: {
+    label: 'Decision Maker Insights',
+    icon: Users,
+    sections: [
+      { name: 'Executive Summary', subItems: [] },
+      { name: 'Strategic Posture & Planning', subItems: [] },
+      { name: 'Challenges & Constraints', subItems: [] },
+      { name: 'Device Trends', subItems: [] },
+      { name: 'Purchasing Criteria', subItems: [] },
+      { name: 'Device Ecosystem & Outlook', subItems: [] },
+      { name: 'Demographics', subItems: [] },
+      { name: 'Methodology', subItems: [] },
+    ]
+  },
+  reports: {
+    label: 'Reports',
+    icon: FileBarChart,
+    sections: [
+      { name: 'Featured Report', subItems: [] },
+    ]
+  }
+}
+
+// Navigation Dropdown Component (Option A)
 function NavDropdown({ 
   label, 
   icon: Icon, 
@@ -243,6 +284,73 @@ function NavDropdown({
   )
 }
 
+// Mega Menu Dropdown Component (Option B)
+function MegaMenuDropdown({ 
+  label, 
+  icon: Icon, 
+  sections, 
+  isOpen, 
+  onToggle,
+  onItemClick 
+}: { 
+  label: string
+  icon: React.ElementType
+  sections: { name: string; subItems: string[] }[]
+  isOpen: boolean
+  onToggle: () => void
+  onItemClick: (item: string, subItem?: string) => void
+}) {
+  return (
+    <div className="relative">
+      <button
+        onClick={onToggle}
+        className={clsx(
+          "flex items-center space-x-2 px-5 py-2 rounded-full text-sm font-medium transition-all",
+          isOpen 
+            ? "bg-[#357CA3] text-white" 
+            : "text-futurum-textMuted dark:text-dark-textMuted hover:bg-futurum-bg dark:hover:bg-dark-bgAlt"
+        )}
+      >
+        <Icon size={16} />
+        <span>{label}</span>
+        <ChevronDown size={14} className={clsx("transition-transform", isOpen && "rotate-180")} />
+      </button>
+      
+      {isOpen && (
+        <div className="absolute top-full left-0 mt-2 min-w-[480px] bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-xl shadow-lg z-50 overflow-hidden">
+          <div className="p-4">
+            <div className="grid grid-cols-2 gap-4">
+              {sections.map((section, idx) => (
+                <div key={idx} className="space-y-1">
+                  <button
+                    onClick={() => onItemClick(section.name)}
+                    className="w-full text-left px-3 py-2 text-sm font-semibold text-futurum-text dark:text-dark-text hover:bg-[#357CA3]/10 hover:text-[#357CA3] rounded-lg transition-colors"
+                  >
+                    {section.name}
+                  </button>
+                  {section.subItems.length > 0 && (
+                    <div className="ml-3 space-y-0.5">
+                      {section.subItems.map((subItem, subIdx) => (
+                        <button
+                          key={subIdx}
+                          onClick={() => onItemClick(section.name, subItem)}
+                          className="w-full text-left px-3 py-1.5 text-xs text-futurum-textMuted dark:text-dark-textMuted hover:bg-futurum-bg dark:hover:bg-dark-bgAlt hover:text-futurum-text dark:hover:text-dark-text rounded-md transition-colors"
+                        >
+                          {subItem}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function ChatPage() {
   const { conversationId } = useParams()
   const navigate = useNavigate()
@@ -268,6 +376,7 @@ export default function ChatPage() {
   const [, setNewsLoading] = useState(true)
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null)
   const [openNav, setOpenNav] = useState<string | null>(null)
+  const [navStyle, setNavStyle] = useState<'A' | 'B'>('A') // A/B Testing: A = Simple Dropdowns, B = Mega Menu
   
   useEffect(() => {
     loadConversations()
@@ -315,7 +424,7 @@ export default function ChatPage() {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Sticky Navigation Header - Always visible */}
         <div className="sticky top-0 z-40 pt-5 pb-4 px-4">
-          <div className="max-w-3xl mx-auto flex items-center space-x-3">
+          <div className="max-w-4xl mx-auto flex items-center space-x-3">
             {/* Back Button */}
             <button 
               onClick={() => navigate('/home')}
@@ -326,42 +435,118 @@ export default function ChatPage() {
             
             {/* Pill Menu */}
             <div className="flex-1 bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-full px-2 py-2 shadow-sm">
-              {/* Navigation Dropdowns */}
-              <div className="flex items-center justify-center space-x-1">
-              <NavDropdown
-                label={aiDevicesNav.marketData.label}
-                icon={aiDevicesNav.marketData.icon}
-                items={aiDevicesNav.marketData.items}
-                isOpen={openNav === 'marketData'}
-                onToggle={() => setOpenNav(openNav === 'marketData' ? null : 'marketData')}
-                onItemClick={(item) => {
-                  setInput(`Tell me about ${item} for AI Devices`)
-                  setOpenNav(null)
-                }}
-              />
-              <NavDropdown
-                label={aiDevicesNav.decisionMaker.label}
-                icon={aiDevicesNav.decisionMaker.icon}
-                items={aiDevicesNav.decisionMaker.items}
-                isOpen={openNav === 'decisionMaker'}
-                onToggle={() => setOpenNav(openNav === 'decisionMaker' ? null : 'decisionMaker')}
-                onItemClick={(item) => {
-                  setInput(`Tell me about ${item} for AI Devices`)
-                  setOpenNav(null)
-                }}
-              />
-              <NavDropdown
-                label={aiDevicesNav.reports.label}
-                icon={aiDevicesNav.reports.icon}
-                items={aiDevicesNav.reports.items}
-                isOpen={openNav === 'reports'}
-                onToggle={() => setOpenNav(openNav === 'reports' ? null : 'reports')}
-                onItemClick={(item) => {
-                  setInput(`Show me the ${item} for AI Devices`)
-                  setOpenNav(null)
-                }}
-              />
-              </div>
+              {/* Navigation - Option A (Simple Dropdowns) */}
+              {navStyle === 'A' && (
+                <div className="flex items-center justify-center space-x-1">
+                  <NavDropdown
+                    label={aiDevicesNav.marketData.label}
+                    icon={aiDevicesNav.marketData.icon}
+                    items={aiDevicesNav.marketData.items}
+                    isOpen={openNav === 'marketData'}
+                    onToggle={() => setOpenNav(openNav === 'marketData' ? null : 'marketData')}
+                    onItemClick={(item) => {
+                      setInput(`Tell me about ${item} for AI Devices`)
+                      setOpenNav(null)
+                    }}
+                  />
+                  <NavDropdown
+                    label={aiDevicesNav.decisionMaker.label}
+                    icon={aiDevicesNav.decisionMaker.icon}
+                    items={aiDevicesNav.decisionMaker.items}
+                    isOpen={openNav === 'decisionMaker'}
+                    onToggle={() => setOpenNav(openNav === 'decisionMaker' ? null : 'decisionMaker')}
+                    onItemClick={(item) => {
+                      setInput(`Tell me about ${item} for AI Devices`)
+                      setOpenNav(null)
+                    }}
+                  />
+                  <NavDropdown
+                    label={aiDevicesNav.reports.label}
+                    icon={aiDevicesNav.reports.icon}
+                    items={aiDevicesNav.reports.items}
+                    isOpen={openNav === 'reports'}
+                    onToggle={() => setOpenNav(openNav === 'reports' ? null : 'reports')}
+                    onItemClick={(item) => {
+                      setInput(`Show me the ${item} for AI Devices`)
+                      setOpenNav(null)
+                    }}
+                  />
+                </div>
+              )}
+              
+              {/* Navigation - Option B (Mega Menu) */}
+              {navStyle === 'B' && (
+                <div className="flex items-center justify-center space-x-1">
+                  <MegaMenuDropdown
+                    label={megaMenuNav.marketData.label}
+                    icon={megaMenuNav.marketData.icon}
+                    sections={megaMenuNav.marketData.sections}
+                    isOpen={openNav === 'marketData'}
+                    onToggle={() => setOpenNav(openNav === 'marketData' ? null : 'marketData')}
+                    onItemClick={(item, subItem) => {
+                      const query = subItem 
+                        ? `Tell me about ${item} - ${subItem} for AI Devices`
+                        : `Tell me about ${item} for AI Devices`
+                      setInput(query)
+                      setOpenNav(null)
+                    }}
+                  />
+                  <MegaMenuDropdown
+                    label={megaMenuNav.decisionMaker.label}
+                    icon={megaMenuNav.decisionMaker.icon}
+                    sections={megaMenuNav.decisionMaker.sections}
+                    isOpen={openNav === 'decisionMaker'}
+                    onToggle={() => setOpenNav(openNav === 'decisionMaker' ? null : 'decisionMaker')}
+                    onItemClick={(item, subItem) => {
+                      const query = subItem 
+                        ? `Tell me about ${item} - ${subItem} for AI Devices`
+                        : `Tell me about ${item} for AI Devices`
+                      setInput(query)
+                      setOpenNav(null)
+                    }}
+                  />
+                  <MegaMenuDropdown
+                    label={megaMenuNav.reports.label}
+                    icon={megaMenuNav.reports.icon}
+                    sections={megaMenuNav.reports.sections}
+                    isOpen={openNav === 'reports'}
+                    onToggle={() => setOpenNav(openNav === 'reports' ? null : 'reports')}
+                    onItemClick={(item, subItem) => {
+                      const query = subItem 
+                        ? `Show me the ${item} - ${subItem} for AI Devices`
+                        : `Show me the ${item} for AI Devices`
+                      setInput(query)
+                      setOpenNav(null)
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+            
+            {/* A/B Toggle */}
+            <div className="flex items-center bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-full p-1 shadow-sm flex-shrink-0">
+              <button
+                onClick={() => setNavStyle('A')}
+                className={clsx(
+                  "px-3 py-1.5 text-xs font-medium rounded-full transition-colors",
+                  navStyle === 'A'
+                    ? "bg-[#357CA3] text-white"
+                    : "text-futurum-textMuted hover:text-futurum-text"
+                )}
+              >
+                A
+              </button>
+              <button
+                onClick={() => setNavStyle('B')}
+                className={clsx(
+                  "px-3 py-1.5 text-xs font-medium rounded-full transition-colors",
+                  navStyle === 'B'
+                    ? "bg-[#357CA3] text-white"
+                    : "text-futurum-textMuted hover:text-futurum-text"
+                )}
+              >
+                B
+              </button>
             </div>
           </div>
         </div>
