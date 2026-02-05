@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { 
-  Plus, FileText, X, ArrowUp, ChevronDown, ChevronLeft,
+  FileText, X, ChevronDown, ChevronLeft,
   Loader2, BarChart3, Users, FileBarChart,
   Download, ExternalLink, Newspaper
 } from 'lucide-react'
@@ -306,28 +306,6 @@ export default function ChatPage() {
       inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 200) + 'px'
     }
   }, [input])
-  
-  const handleSubmit = async (e?: React.FormEvent) => {
-    e?.preventDefault()
-    if (!input.trim() || isSending) return
-    
-    const message = input.trim()
-    setInput('')
-    setSelectedSource(null)
-    
-    await sendMessage(message)
-    
-    if (!conversationId && currentConversation) {
-      navigate(`/chat/${currentConversation.id}`, { replace: true })
-    }
-  }
-  
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSubmit()
-    }
-  }
   
   const isHome = !conversationId && messages.length === 0
   
