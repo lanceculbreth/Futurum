@@ -215,12 +215,30 @@ const megaMenuNav = {
     icon: Users,
     sections: [
       { name: 'Executive Summary', subItems: [] },
-      { name: 'Strategic Posture & Planning', subItems: [] },
-      { name: 'Challenges & Constraints', subItems: [] },
-      { name: 'Device Trends', subItems: [] },
-      { name: 'Purchasing Criteria', subItems: [] },
-      { name: 'Device Ecosystem & Outlook', subItems: [] },
-      { name: 'Demographics', subItems: [] },
+      { 
+        name: 'Strategic Posture & Planning', 
+        subItems: ['AI PC Planning', 'PC Refresh'] 
+      },
+      { 
+        name: 'Challenges & Constraints', 
+        subItems: ['Pain Points', 'Tariff Impact'] 
+      },
+      { 
+        name: 'Device Trends', 
+        subItems: ['Vendors', 'Hardware Preferences', 'Features'] 
+      },
+      { 
+        name: 'Purchasing Criteria', 
+        subItems: ['Refresh Posture', 'Purchasing Preferences'] 
+      },
+      { 
+        name: 'Device Ecosystem & Outlook', 
+        subItems: ['Device Management', 'Chromebooks', 'Spending Change', 'AI-Enabled Smartphone', 'Collaboration Posture'] 
+      },
+      { 
+        name: 'Demographics', 
+        subItems: ['Vertical Market', 'Organization Revenue', 'Role', 'Geography'] 
+      },
       { name: 'Methodology', subItems: [] },
     ]
   },
