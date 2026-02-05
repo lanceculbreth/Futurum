@@ -478,6 +478,18 @@ export default function ChatPage() {
                       setOpenNav(null)
                     }}
                   />
+                  <button
+                    onClick={async () => {
+                      await sendMessage('Show me the Featured Reports for AI Devices')
+                      if (currentConversation) {
+                        navigate(`/chat/${currentConversation.id}`)
+                      }
+                    }}
+                    className="flex items-center space-x-2 px-5 py-2 rounded-full text-sm font-medium text-futurum-textMuted dark:text-dark-textMuted hover:bg-futurum-bg dark:hover:bg-dark-bgAlt transition-all"
+                  >
+                    <FileBarChart size={16} />
+                    <span>Reports</span>
+                  </button>
                 </div>
               )}
               
@@ -512,6 +524,18 @@ export default function ChatPage() {
                       setOpenNav(null)
                     }}
                   />
+                  <button
+                    onClick={async () => {
+                      await sendMessage('Show me the Featured Reports for AI Devices')
+                      if (currentConversation) {
+                        navigate(`/chat/${currentConversation.id}`)
+                      }
+                    }}
+                    className="flex items-center space-x-2 px-5 py-2 rounded-full text-sm font-medium text-futurum-textMuted dark:text-dark-textMuted hover:bg-futurum-bg dark:hover:bg-dark-bgAlt transition-all"
+                  >
+                    <FileBarChart size={16} />
+                    <span>Reports</span>
+                  </button>
                 </div>
               )}
             </div>
