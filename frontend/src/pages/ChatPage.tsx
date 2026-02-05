@@ -335,7 +335,7 @@ function MegaMenuDropdown({
       </button>
       
       {isOpen && (
-        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[calc(100vw-theme(spacing.60)-theme(spacing.32))] max-w-3xl bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-xl shadow-lg z-50 overflow-hidden">
+        <div className="absolute top-full left-0 right-0 mt-4 bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-xl shadow-lg z-50 overflow-hidden">
           <div className="p-5">
             <div className="flex flex-wrap gap-x-8 gap-y-4">
               {sections.map((section, idx) => (
@@ -452,7 +452,7 @@ export default function ChatPage() {
             </button>
             
             {/* Pill Menu */}
-            <div className="flex-1 bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-full px-2 py-2 shadow-sm">
+            <div className="flex-1 bg-futurum-white dark:bg-dark-surface border border-futurum-border dark:border-dark-border rounded-full px-2 py-2 shadow-sm relative">
               {/* Navigation - Option A (Simple Dropdowns) */}
               {navStyle === 'A' && (
                 <div className="flex items-center justify-center space-x-1">
