@@ -132,7 +132,7 @@ export default function Layout() {
             onClick={() => setShowAllPracticeAreas(!showAllPracticeAreas)}
             className="px-3 py-1.5 text-xs text-[#357CA3] hover:text-[#2d6a8a] font-medium transition-colors"
           >
-            {showAllPracticeAreas ? 'Show less' : 'See all 11'}
+            {showAllPracticeAreas ? 'Show less' : 'See all 10'}
           </button>
           
           {/* Divider */}
