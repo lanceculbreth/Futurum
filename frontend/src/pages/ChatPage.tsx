@@ -478,17 +478,6 @@ export default function ChatPage() {
                       setOpenNav(null)
                     }}
                   />
-                  <NavDropdown
-                    label={aiDevicesNav.reports.label}
-                    icon={aiDevicesNav.reports.icon}
-                    items={aiDevicesNav.reports.items}
-                    isOpen={openNav === 'reports'}
-                    onToggle={() => setOpenNav(openNav === 'reports' ? null : 'reports')}
-                    onItemClick={(item) => {
-                      setInput(`Show me the ${item} for AI Devices`)
-                      setOpenNav(null)
-                    }}
-                  />
                 </div>
               )}
               
@@ -519,20 +508,6 @@ export default function ChatPage() {
                       const query = subItem 
                         ? `Tell me about ${item} - ${subItem} for AI Devices`
                         : `Tell me about ${item} for AI Devices`
-                      setInput(query)
-                      setOpenNav(null)
-                    }}
-                  />
-                  <MegaMenuDropdown
-                    label={megaMenuNav.reports.label}
-                    icon={megaMenuNav.reports.icon}
-                    sections={megaMenuNav.reports.sections}
-                    isOpen={openNav === 'reports'}
-                    onToggle={() => setOpenNav(openNav === 'reports' ? null : 'reports')}
-                    onItemClick={(item, subItem) => {
-                      const query = subItem 
-                        ? `Show me the ${item} - ${subItem} for AI Devices`
-                        : `Show me the ${item} for AI Devices`
                       setInput(query)
                       setOpenNav(null)
                     }}
